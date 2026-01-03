@@ -20,7 +20,7 @@
   "author": "LastChemist",
   "license": "MIT",
   "devDependencies": {
-    "gh-pages": "^5.0.0",
+    "gh-pages": "^6.3.0",
     "live-server": "^1.2.2"
   },
   "homepage": "https://lastchemist.github.io/creb_web"
