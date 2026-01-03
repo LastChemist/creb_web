@@ -1,0 +1,27 @@
+{
+  "name": "creb-web",
+  "version": "1.0.0",
+  "description": "Chemical Reaction Balancer Web Application",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=8080",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "build": "mkdir -p dist && cp -r *.html css js images dist/",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": [
+    "chemistry",
+    "chemical-reaction",
+    "balancer",
+    "stoichiometry",
+    "calculator"
+  ],
+  "author": "LastChemist",
+  "license": "MIT",
+  "devDependencies": {
+    "gh-pages": "^5.0.0",
+    "live-server": "^1.2.2"
+  },
+  "homepage": "https://lastchemist.github.io/creb_web"
+}
