@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREB - Chemical Reaction Suite</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <i class="fas fa-flask header-icon"></i>
+                <h1>CREB Suite</h1>
+                <span class="header-subtitle">Chemical Reaction Tools</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="balancer">
+                        <i class="fas fa-balance-scale"></i> Reaction Balancer
+                    </button>
+                    <button class="tab-button" data-tab="stoichiometry">
+                        <i class="fas fa-calculator"></i> Stoichiometry Calculator
+                    </button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Reaction Balancer Tab -->
+                    <div id="balancer-tab" class="tab-pane active">
+                        <div class="balancer-container">
+                            <div class="spacer-top"></div>
+
+                            <!-- Equation Input -->
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-paper-plane input-icon"></i>
+                                    <input type="text" id="equation-input" class="equation-input"
+                                        placeholder="Enter Chemical Equation (Example: H2 + O2 -> H2O)">
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="button-group">
+                                <button id="balance-button" class="btn btn-primary">
+                                    <i class="fas fa-balance-scale"></i> Balance Equation
+                                </button>
+                                <button id="clear-button" class="btn btn-outline">
+                                    <i class="fas fa-times"></i> Clear
+                                </button>
+                            </div>
+
+                            <div class="divider"></div>
+                            <div id="copy-status" class="copy-status"></div>
+                            <div class="divider"></div>
+
+                            <!-- Results -->
+                            <div id="output-container" class="output-container hidden">
+                                <h3 class="output-title">Balanced Equation</h3>
+                                <div class="output-content">
+                                    <div class="output-row">
+                                        <div id="balanced-equation" class="balanced-equation"></div>
+                                        <button class="copy-btn" data-target="balanced-equation" title="Copy equation">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="divider-small"></div>
+                                    <div class="output-row">
+                                        <div id="coefficients-text" class="coefficients-text"></div>
+                                        <button class="copy-btn" data-target="coefficients-text"
+                                            title="Copy coefficients">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="divider-medium"></div>
+                                    <div class="solution-steps-section">
+                                        <button id="toggle-solution-btn" class="btn-toggle-solution">
+                                            <i class="fas fa-chevron-down"></i> Show Detailed Solution Steps
+                                        </button>
+                                        <div id="solution-steps-container" class="solution-steps-container hidden">
+                                            <div class="solution-header">
+                                                <i class="fas fa-graduation-cap solution-icon"></i>
+                                                <h4>Algebraic Method Solution Steps</h4>
+                                            </div>
+                                            <div class="solution-divider"></div>
+                                            <div id="solution-steps-content"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Error Container -->
+                            <div id="error-container" class="error-container hidden">
+                                <i class="fas fa-exclamation-circle error-icon"></i>
+                                <span id="error-text"></span>
+                            </div>
+
+                            <!-- Examples -->
+                            <div class="examples-container">
+                                <h4>Try these examples:</h4>
+                                <div class="examples-grid">
+                                    <button class="example-btn" data-equation="H2 + O2 -> H2O">H2 + O2 → H2O</button>
+                                    <button class="example-btn" data-equation="CH4 + O2 -> CO2 + H2O">CH4 + O2 → CO2 +
+                                        H2O</button>
+                                    <button class="example-btn" data-equation="Fe + O2 -> Fe2O3">Fe + O2 →
+                                        Fe2O3</button>
+                                    <button class="example-btn" data-equation="NaOH + H2SO4 = Na2SO4 + H2O">NaOH + H2SO4
+                                        = Na2SO4 + H2O</button>
+                                    <button class="example-btn"
+                                        data-equation="KMnO4 + HCl = KCl + MnCl2 + Cl2 + H2O">KMnO4 + HCl → KCl + MnCl2
+                                        + Cl2 + H2O</button>
+                                    <button class="example-btn" data-equation="Al + HCl = AlCl3 + H2">Al + HCl → AlCl3 +
+                                        H2</button>
+                                    <button class="example-btn" data-equation="C6H12O6 + O2 = CO2 + H2O">C6H12O6 + O2 →
+                                        CO2 + H2O</button>
+                                    <button class="example-btn" data-equation="NH3 + O2 = NO + H2O">NH3 + O2 → NO +
+                                        H2O</button>
+                                    <button class="example-btn" data-equation="Cu + HNO3 = Cu(NO3)2 + NO + H2O">Cu +
+                                        HNO3 → Cu(NO3)2 + NO + H2O</button>
+                                    <button class="example-btn"
+                                        data-equation="K4Fe(CN)6 + KMnO4 + H2SO4 = Fe2(SO4)3 + MnSO4 + KNO3 + CO2 + K2SO4 + H2O">Complex
+                                        Equation</button>
+                                </div>
+                            </div>
+
+                            <div class="spacer-bottom"></div>
+                        </div>
+                    </div>
+
+                    <!-- Stoichiometry Tab -->
+                    <div id="stoichiometry-tab" class="tab-pane">
+                        <div class="stoichiometry-container">
+                            <div class="divider"></div>
+                            <div id="stoich-equation-text" class="stoich-equation-text">
+                                Balance an equation first to use stoichiometry calculator
+                            </div>
+                            <div class="divider"></div>
+
+                            <!-- Grid Container -->
+                            <div id="scrollable-grid-container" class="scrollable-grid-container hidden">
+                                <div id="stoichiometry-grid"></div>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <!-- Controls -->
+                            <div class="stoichiometry-controls">
+                                <div class="button-group">
+                                    <button id="calculate-stoich-button" class="btn btn-primary">
+                                        <i class="fas fa-calculator"></i> Calculate Stoichiometry
+                                    </button>
+                                    <button id="clear-stoich-button" class="btn btn-outline">
+                                        <i class="fas fa-times"></i> Clear All
+                                    </button>
+                                    <button id="load-balanced-button" class="btn btn-outline">
+                                        <i class="fas fa-upload"></i> Load from Balanced
+                                    </button>
+                                </div>
+                                <div class="divider-small"></div>
+                                <div id="stoich-result-text" class="stoich-result-text"></div>
+                            </div>
+
+                            <div class="divider-small"></div>
+                            <div class="center-button">
+                                <button id="view-table-button" class="btn btn-secondary">
+                                    <i class="fas fa-table"></i> View Full Table
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <span>Ready</span>
+        </footer>
+
+        <!-- Modal for Full Table -->
+        <div id="table-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Full Stoichiometry Table</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="table-content"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="export-table-btn" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Export Table
+                    </button>
+                    <button id="close-table-btn" class="btn btn-outline">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed script loading order: dependencies first -->
+    <script src="js/elements.js"></script>
+    <script src="js/parser.js"></script>
+    <script src="js/linearEquationsSystem.js"></script>
+    <script src="js/stoichiometry.js"></script>
+    <script src="js/assets.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Additional fix for example buttons -->
+    <script>
+        // Fix example button functionality - wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fix example buttons after app is initialized
+            setTimeout(function () {
+                document.querySelectorAll('.example-btn').forEach(btn => {
+                    // Remove any existing event listeners by cloning
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+
+                    // Add new event listener
+                    newBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const equation = this.getAttribute('data-equation');
+                        if (equation && window.app) {
+                            // Clear any existing results
+                            document.getElementById('output-container').classList.add('hidden');
+                            document.getElementById('error-container').classList.add('hidden');
+                            document.getElementById('solution-steps-container').classList.add('hidden');
+                            document.getElementById('copy-status').textContent = '';
+
+                            // Set the equation
+                            const input = document.getElementById('equation-input');
+                            input.value = equation;
+                            input.focus();
+
+                            // Update current equation
+                            if (window.app) {
+                                window.app.currentEquation = equation;
+                            }
+                        }
+                    });
+                });
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>
